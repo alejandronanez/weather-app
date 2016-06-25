@@ -1,0 +1,8 @@
+node_modules
+coverage
+.tmp
+.npmrc
+*.log
+dist
+.nyc_output
+build

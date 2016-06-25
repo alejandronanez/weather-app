@@ -1,0 +1,78 @@
+{
+  "private": true,
+  "name": "FCC-weather-app",
+  "version": "1.0.0",
+  "description": "Free code camp weather app",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack",
+    "lint": "eslint . --ext .js",
+    "start": "webpack-dev-server",
+    "test": "ava \"app/**/*.test.js\" --verbose",
+    "cover": "nyc --all npm run test",
+    "cover:check": "nyc --all check-coverage --statements 90 --branches 90 --functions 90 --lines 90",
+    "watch:test": "npm run test -- --watch",
+    "watch:cover": "nodemon --quiet --watch app --exec npm run cover -s"
+  },
+  "author": "Alejandro Nanez <alejonanez@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^6.3.6",
+    "ava": "^0.15.2",
+    "babel": "^6.5.2",
+    "babel-core": "^6.10.4",
+    "babel-eslint": "^6.1.0",
+    "babel-loader": "^6.2.4",
+    "babel-polyfill": "^6.9.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "clean-webpack-plugin": "^0.1.9",
+    "css-loader": "^0.23.1",
+    "eslint": "^2.13.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-friendly-formatter": "^2.0.5",
+    "eslint-loader": "^1.3.0",
+    "eslint-plugin-import": "^1.9.2",
+    "eslint-plugin-jsx-a11y": "^1.5.3",
+    "eslint-plugin-react": "^5.2.2",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.21.0",
+    "node-sass": "^3.8.0",
+    "nodemon": "^1.9.2",
+    "nyc": "^6.6.1",
+    "postcss-loader": "^0.9.1",
+    "purifycss-webpack-plugin": "^2.0.3",
+    "sass-loader": "^3.2.1",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-merge": "^0.14.0",
+    "webpack-validator": "^2.2.0"
+  },
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
+  "nyc": {
+    "exclude": [
+      "coverage",
+      "build",
+      "tooling",
+      "webpack.config.js",
+      "**/*.test.js",
+      "app/index.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text",
+      "html"
+    ],
+    "require": [
+      "babel-register"
+    ]
+  }
+}
