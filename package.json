@@ -74,5 +74,8 @@
     "require": [
       "babel-register"
     ]
+  },
+  "dependencies": {
+    "axios": "^0.12.0"
   }
 }
