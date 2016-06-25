@@ -7,6 +7,7 @@ const parts = require('./tooling/parts');
 
 const PATHS = {
 	app: path.join(__dirname, 'app'),
+	htmlTemplate: path.join(__dirname, 'app/index.html'),
 	fonts: path.join(__dirname, 'app/font'),
 	build: path.join(__dirname, 'build'),
 	style: path.join(__dirname, 'app/styles/main.scss')
@@ -23,6 +24,7 @@ const common = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
+			template: PATHS.htmlTemplate,
 			title: 'SPAs Boilerplate'
 		})
 	]
