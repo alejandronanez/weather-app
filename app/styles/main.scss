@@ -6,6 +6,16 @@ h1, p {
 	margin: 0;
 }
 
+a {
+	color: #fff;
+	margin-top: 1em;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
 body {
 	align-items: center;
 	background: $background;
