@@ -6,9 +6,9 @@ import {
 
 import axios from 'axios';
 
-export function getCoords({ data }) {
-	const lat = parseFloat(data.loc.split(',')[0]);
-	const lon = parseFloat(data.loc.split(',')[1]);
+export function getCoords({ data: { loc } }) {
+	const lat = parseFloat(loc.split(',')[0]);
+	const lon = parseFloat(loc.split(',')[1]);
 
 	return { lat, lon };
 }

@@ -8,7 +8,7 @@
     "build": "webpack",
     "lint": "eslint . --ext .js",
     "start": "webpack-dev-server",
-    "test": "ava \"./app/**/*.test.js\" --verbose",
+    "test": "NODE_PATH=app ava \"./app/**/*.test.js\" --verbose",
     "cover": "nyc --all npm run test",
     "cover:check": "nyc --all check-coverage --statements 90 --branches 90 --functions 90 --lines 90",
     "watch:test": "npm run test -- --watch",
@@ -38,6 +38,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.21.0",
+    "jsdom": "^9.2.1",
     "node-sass": "^3.8.0",
     "nodemon": "^1.9.2",
     "nyc": "^6.6.1",
@@ -53,7 +54,9 @@
   },
   "ava": {
     "require": [
-      "babel-register"
+      "babel-register",
+      "babel-polyfill",
+      "./tooling/test-tooling.js"
     ],
     "babel": "inherit"
   },
