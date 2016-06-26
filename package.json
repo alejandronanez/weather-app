@@ -8,7 +8,7 @@
     "build": "webpack",
     "lint": "eslint . --ext .js",
     "start": "webpack-dev-server",
-    "test": "ava \"app/**/*.test.js\" --verbose",
+    "test": "ava \"./app/**/*.test.js\" --verbose",
     "cover": "nyc --all npm run test",
     "cover:check": "nyc --all check-coverage --statements 90 --branches 90 --functions 90 --lines 90",
     "watch:test": "npm run test -- --watch",
