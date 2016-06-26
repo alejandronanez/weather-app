@@ -62,7 +62,7 @@ function filterData({ data }) {
 }
 
 function updateDOM({ cityTemperature, cityName, cityWeather, cityIcon }) {
-	let temperature = cityTemperature;
+	let temperature = cityTemperature.toFixed(1);
 	const toCelsiusButton = document.querySelector('.js-to-celsius');
 	const toFarenheitButton = document.querySelector('.js-to-farenheit');
 	const temperatureElement = document.querySelector('.js-temperature');
@@ -70,12 +70,12 @@ function updateDOM({ cityTemperature, cityName, cityWeather, cityIcon }) {
 	document.querySelector('.js-city').textContent = cityName;
 	document.querySelector('.js-weather').textContent = cityWeather;
 	document.querySelector('.js-icon').className = `js-icon wi wi-owm-${cityIcon}`;
-	temperatureElement.textContent = `${cityTemperature} Cº`;
+	temperatureElement.textContent = `${temperature} Cº`;
 	toCelsiusButton.setAttribute('class', 'active');
 	toCelsiusButton.disabled = true;
 
 	toCelsiusButton.addEventListener('click', () => {
-		temperature = farenheitToCelsius(temperature);
+		temperature = farenheitToCelsius(temperature).toFixed(1);
 		temperatureElement.textContent = `${temperature} Cº`;
 
 		toFarenheitButton.setAttribute('class', '');
@@ -86,7 +86,7 @@ function updateDOM({ cityTemperature, cityName, cityWeather, cityIcon }) {
 	});
 
 	toFarenheitButton.addEventListener('click', () => {
-		temperature = celsiusToFarenheit(temperature);
+		temperature = celsiusToFarenheit(temperature).toFixed(1);
 		temperatureElement.textContent = `${temperature} Fº`;
 
 		toFarenheitButton.setAttribute('class', 'active');
