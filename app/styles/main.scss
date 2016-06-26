@@ -34,6 +34,16 @@ body {
 	text-transform: uppercase;
 }
 
+.icon {
+	font-size: 1.7em;
+}
+
+.temperature {
+	font-size: 3.5em;
+	font-weight: 700;
+	margin-bottom: .2em;
+}
+
 .weather-container {
 	font-weight: 300;
 	margin-bottom: .5em;
@@ -41,12 +51,6 @@ body {
 
 .weather {
 	font-style: italic;
-}
-
-.temperature {
-	font-size: 3.5em;
-	font-weight: 700;
-	margin-bottom: .2em;
 }
 
 button {
@@ -62,6 +66,10 @@ button {
 		background: #fff;
 		color: $background;
 		cursor: pointer;
+
+		&.active {
+			cursor: auto;
+		}
 	}
 
 	&:focus {
