@@ -16,18 +16,20 @@ import {
 	kelvinToCelsius,
 	getWeather,
 	filterData,
-	catchError
-	// updateDOM
+	catchError,
+	updateDOM
 } from 'helpers/helpers';
 
 test.beforeEach(() => {
 	sinon.spy(axios, 'get');
 	sinon.spy(window, 'alert');
+	document.body.innerHTML = '';
 });
 
 test.afterEach(() => {
 	axios.get.restore();
 	window.alert.restore();
+	document.body.innerHTML = '';
 });
 
 test('getCoords() - returns an object with lat and long keys', t => {
@@ -149,4 +151,117 @@ test('catchError() - should call window.alert with the right parameters', t => {
 	t.is(window.alert.getCall(0).args[0], 'foo');
 });
 
-test.todo('updateDOM');
+test('updateDOM() - Updates the DOM accordingly', t => {
+
+	document.body.innerHTML = `
+		<div id="container">
+			<h1 class="city js-city"></h1>
+			<div class="weather-container">
+				<p class="weather js-weather"></p>
+				<span class="icon"><i class="js-icon"></i></span>
+			</div>
+			<div class="temperature js-temperature"><span class="unit js-unit"></span></div>
+			<div class="switcher">
+				<button type="button" class="js-to-farenheit">F</button>
+				<button type="button" class="js-to-celsius">C</button>
+			</div>
+		</div>
+	`;
+
+	const data = {
+		cityTemperature: 273.15, // 273.15K = 0C
+		cityName: 'foo',
+		cityWeather: 'bar',
+		cityIcon: 'baz'
+	};
+
+	updateDOM(data);
+
+	const weather = document.querySelector('.js-weather');
+	const city = document.querySelector('.js-city');
+	const icon = document.querySelector('.js-icon');
+	const temperature = document.querySelector('.js-temperature');
+	const farenheitButton = document.querySelector('.js-to-farenheit');
+	const celsiusButton = document.querySelector('.js-to-celsius');
+
+	t.is(weather.innerHTML, data.cityWeather);
+	t.is(city.innerHTML, data.cityName);
+	t.is(icon.classList[0], 'js-icon');
+	t.is(icon.classList[1], 'wi');
+	t.is(icon.classList[2], 'wi-owm-baz');
+	t.is(temperature.innerHTML, '0.0 Cº');
+	t.false(farenheitButton.disabled);
+	t.true(celsiusButton.disabled);
+});
+
+test('updateDOM() - Transforms to farenheit disable transform to celsius button', t => {
+
+	document.body.innerHTML = `
+		<div id="container">
+			<h1 class="city js-city"></h1>
+			<div class="weather-container">
+				<p class="weather js-weather"></p>
+				<span class="icon"><i class="js-icon"></i></span>
+			</div>
+			<div class="temperature js-temperature"><span class="unit js-unit"></span></div>
+			<div class="switcher">
+				<button type="button" class="js-to-farenheit">F</button>
+				<button type="button" class="js-to-celsius">C</button>
+			</div>
+		</div>
+	`;
+
+	const data = {
+		cityTemperature: 273.15, // 273.15K = 0C
+		cityName: 'foo',
+		cityWeather: 'bar',
+		cityIcon: 'baz'
+	};
+
+	updateDOM(data);
+
+	const farenheitButton = document.querySelector('.js-to-farenheit');
+	const celsiusButton = document.querySelector('.js-to-celsius');
+
+	farenheitButton.click();
+
+	t.false(celsiusButton.disabled);
+	t.true(farenheitButton.disabled);
+});
+
+test('updateDOM() - Transforms to celsius disable transform to farenheit button', t => {
+
+	document.body.innerHTML = `
+		<div id="container">
+			<h1 class="city js-city"></h1>
+			<div class="weather-container">
+				<p class="weather js-weather"></p>
+				<span class="icon"><i class="js-icon"></i></span>
+			</div>
+			<div class="temperature js-temperature"><span class="unit js-unit"></span></div>
+			<div class="switcher">
+				<button type="button" class="js-to-farenheit">F</button>
+				<button type="button" class="js-to-celsius">C</button>
+			</div>
+		</div>
+	`;
+
+	const data = {
+		cityTemperature: 273.15, // 273.15K = 0C
+		cityName: 'foo',
+		cityWeather: 'bar',
+		cityIcon: 'baz'
+	};
+
+	updateDOM(data);
+
+	const farenheitButton = document.querySelector('.js-to-farenheit');
+	const celsiusButton = document.querySelector('.js-to-celsius');
+
+	celsiusButton.disabled = false; // It is disabled by default
+
+	celsiusButton.click();
+
+	t.true(celsiusButton.disabled);
+	t.false(farenheitButton.disabled);
+});

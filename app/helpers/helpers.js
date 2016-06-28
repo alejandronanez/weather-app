@@ -70,15 +70,15 @@ export function updateDOM({ cityTemperature, cityName, cityWeather, cityIcon }) 
 	document.querySelector('.js-weather').textContent = cityWeather;
 	document.querySelector('.js-icon').className = `js-icon wi wi-owm-${cityIcon}`;
 	temperatureElement.textContent = `${temperature} Cº`;
-	toCelsiusButton.setAttribute('class', 'active');
+	toCelsiusButton.setAttribute('class', 'active js-to-celsius');
 	toCelsiusButton.disabled = true;
 
 	toCelsiusButton.addEventListener('click', () => {
 		temperature = farenheitToCelsius(temperature).toFixed(1);
 		temperatureElement.textContent = `${temperature} Cº`;
 
-		toFarenheitButton.setAttribute('class', '');
-		toCelsiusButton.setAttribute('class', 'active');
+		toFarenheitButton.setAttribute('class', 'js-to-farenheit');
+		toCelsiusButton.setAttribute('class', 'active js-to-celsius');
 
 		toFarenheitButton.disabled = false;
 		toCelsiusButton.disabled = true;
@@ -88,8 +88,8 @@ export function updateDOM({ cityTemperature, cityName, cityWeather, cityIcon }) 
 		temperature = celsiusToFarenheit(temperature).toFixed(1);
 		temperatureElement.textContent = `${temperature} Fº`;
 
-		toFarenheitButton.setAttribute('class', 'active');
-		toCelsiusButton.setAttribute('class', '');
+		toFarenheitButton.setAttribute('class', 'active js-to-farenheit');
+		toCelsiusButton.setAttribute('class', 'js-to-celsius');
 
 		toFarenheitButton.disabled = true;
 		toCelsiusButton.disabled = false;
