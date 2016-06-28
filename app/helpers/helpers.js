@@ -53,7 +53,7 @@ export function filterData({ data }) {
 	} = data;
 
 	return {
-		cityTemperature: kelvinToCelsius(cityTemperature),
+		cityTemperature,
 		cityName,
 		cityWeather: cityWeather[0].description,
 		cityIcon: cityIcon.id
@@ -61,7 +61,7 @@ export function filterData({ data }) {
 }
 
 export function updateDOM({ cityTemperature, cityName, cityWeather, cityIcon }) {
-	let temperature = cityTemperature.toFixed(1);
+	let temperature = kelvinToCelsius(cityTemperature).toFixed(1);
 	const toCelsiusButton = document.querySelector('.js-to-celsius');
 	const toFarenheitButton = document.querySelector('.js-to-farenheit');
 	const temperatureElement = document.querySelector('.js-temperature');

@@ -1,18 +1,32 @@
 import test from 'ava';
+import sinon from 'sinon';
+import axios from 'axios';
 
 import { isFloat } from 'helpers/test-helpers';
+import {
+	WEATHER_API_KEY,
+	WEATHER_API_URL,
+} from 'constants/constants';
 
 import {
 	getCoords,
 	checkResponse,
 	farenheitToCelsius,
 	celsiusToFarenheit,
-	kelvinToCelsius
-	// getWeather
-	// filterData,
+	kelvinToCelsius,
+	getWeather,
+	filterData
 	// updateDOM,
 	// catchError
 } from 'helpers/helpers';
+
+test.beforeEach(() => {
+	sinon.spy(axios, 'get');
+});
+
+test.afterEach(() => {
+	axios.get.restore();
+});
 
 test('getCoords() - returns an object with lat and long keys', t => {
 	const req = {
@@ -79,8 +93,47 @@ test('kelvinToCelsius() - get the right temperature', t => {
 	t.is(kelvinToCelsius(273.15), 0);
 });
 
-test.todo('getWeather');
-test.todo('checkResponse');
-test.todo('filterData');
+test('getWeather() - call axios.get once', t => {
+	getWeather({ lat: 1, lon: 1 });
+
+	t.true(axios.get.calledOnce);
+});
+
+test('getWeather() - call axios.get with the right parameters', t => {
+	getWeather({ lat: 1, lon: 1 });
+
+	t.is(axios.get.getCall(0).args[0], WEATHER_API_URL);
+	t.is(axios.get.getCall(0).args[1].params.lat, 1);
+	t.is(axios.get.getCall(0).args[1].params.lon, 1);
+	t.is(axios.get.getCall(0).args[1].params.APPID, WEATHER_API_KEY);
+});
+
+test('filterData() - should return the correct data', t => {
+	const params = {
+		data: {
+			main: {
+				temp: 1
+			},
+			weather: [{
+				id: 'icon',
+				description: 'description'
+			}],
+			name: 'foo'
+		}
+	};
+
+	const result = filterData(params);
+
+	t.true(result.hasOwnProperty('cityTemperature'));
+	t.true(result.hasOwnProperty('cityName'));
+	t.true(result.hasOwnProperty('cityWeather'));
+	t.true(result.hasOwnProperty('cityIcon'));
+
+	t.is(result.cityTemperature, 1);
+	t.is(result.cityName, 'foo');
+	t.is(result.cityWeather, 'description');
+	t.is(result.cityIcon, 'icon');
+});
+
 test.todo('updateDOM');
 test.todo('catchError');
