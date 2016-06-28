@@ -98,6 +98,6 @@ export function updateDOM({ cityTemperature, cityName, cityWeather, cityIcon }) 
 
 export function catchError(error) {
 	/* eslint-disable no-alert */
-	alert(error);
+	window.alert(error);
 	/* eslint-enable no-alert */
 }

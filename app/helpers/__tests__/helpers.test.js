@@ -15,17 +15,19 @@ import {
 	celsiusToFarenheit,
 	kelvinToCelsius,
 	getWeather,
-	filterData
-	// updateDOM,
-	// catchError
+	filterData,
+	catchError
+	// updateDOM
 } from 'helpers/helpers';
 
 test.beforeEach(() => {
 	sinon.spy(axios, 'get');
+	sinon.spy(window, 'alert');
 });
 
 test.afterEach(() => {
 	axios.get.restore();
+	window.alert.restore();
 });
 
 test('getCoords() - returns an object with lat and long keys', t => {
@@ -135,5 +137,16 @@ test('filterData() - should return the correct data', t => {
 	t.is(result.cityIcon, 'icon');
 });
 
+test('catchError() - should call window.alert only once', t => {
+	catchError('foo');
+
+	t.true(window.alert.calledOnce);
+});
+
+test('catchError() - should call window.alert with the right parameters', t => {
+	catchError('foo');
+
+	t.is(window.alert.getCall(0).args[0], 'foo');
+});
+
 test.todo('updateDOM');
-test.todo('catchError');
