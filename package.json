@@ -7,6 +7,7 @@
   "scripts": {
     "build": "webpack",
     "lint": "eslint . --ext .js",
+    "report-coverage": "nyc report --reporter=lcov | codecov",
     "start": "webpack-dev-server",
     "test": "NODE_PATH=app ava \"./app/**/*.test.js\" --verbose",
     "cover": "nyc --all npm run test",
@@ -28,6 +29,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-register": "^6.9.0",
     "clean-webpack-plugin": "^0.1.9",
+    "codecov.io": "^0.1.6",
     "css-loader": "^0.23.1",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
