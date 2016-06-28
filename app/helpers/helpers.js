@@ -6,9 +6,9 @@ import {
 
 import axios from 'axios';
 
-export function getCoords({ data }) {
-	const lat = parseFloat(data.loc.split(',')[0]);
-	const lon = parseFloat(data.loc.split(',')[1]);
+export function getCoords({ data: { loc } }) {
+	const lat = parseFloat(loc.split(',')[0]);
+	const lon = parseFloat(loc.split(',')[1]);
 
 	return { lat, lon };
 }
@@ -53,7 +53,7 @@ export function filterData({ data }) {
 	} = data;
 
 	return {
-		cityTemperature: kelvinToCelsius(cityTemperature),
+		cityTemperature,
 		cityName,
 		cityWeather: cityWeather[0].description,
 		cityIcon: cityIcon.id
@@ -61,7 +61,7 @@ export function filterData({ data }) {
 }
 
 export function updateDOM({ cityTemperature, cityName, cityWeather, cityIcon }) {
-	let temperature = cityTemperature.toFixed(1);
+	let temperature = kelvinToCelsius(cityTemperature).toFixed(1);
 	const toCelsiusButton = document.querySelector('.js-to-celsius');
 	const toFarenheitButton = document.querySelector('.js-to-farenheit');
 	const temperatureElement = document.querySelector('.js-temperature');
@@ -70,15 +70,15 @@ export function updateDOM({ cityTemperature, cityName, cityWeather, cityIcon }) 
 	document.querySelector('.js-weather').textContent = cityWeather;
 	document.querySelector('.js-icon').className = `js-icon wi wi-owm-${cityIcon}`;
 	temperatureElement.textContent = `${temperature} Cº`;
-	toCelsiusButton.setAttribute('class', 'active');
+	toCelsiusButton.setAttribute('class', 'active js-to-celsius');
 	toCelsiusButton.disabled = true;
 
 	toCelsiusButton.addEventListener('click', () => {
 		temperature = farenheitToCelsius(temperature).toFixed(1);
 		temperatureElement.textContent = `${temperature} Cº`;
 
-		toFarenheitButton.setAttribute('class', '');
-		toCelsiusButton.setAttribute('class', 'active');
+		toFarenheitButton.setAttribute('class', 'js-to-farenheit');
+		toCelsiusButton.setAttribute('class', 'active js-to-celsius');
 
 		toFarenheitButton.disabled = false;
 		toCelsiusButton.disabled = true;
@@ -88,8 +88,8 @@ export function updateDOM({ cityTemperature, cityName, cityWeather, cityIcon }) 
 		temperature = celsiusToFarenheit(temperature).toFixed(1);
 		temperatureElement.textContent = `${temperature} Fº`;
 
-		toFarenheitButton.setAttribute('class', 'active');
-		toCelsiusButton.setAttribute('class', '');
+		toFarenheitButton.setAttribute('class', 'active js-to-farenheit');
+		toCelsiusButton.setAttribute('class', 'js-to-celsius');
 
 		toFarenheitButton.disabled = true;
 		toCelsiusButton.disabled = false;
@@ -98,6 +98,6 @@ export function updateDOM({ cityTemperature, cityName, cityWeather, cityIcon }) 
 
 export function catchError(error) {
 	/* eslint-disable no-alert */
-	alert(error);
+	window.alert(error);
 	/* eslint-enable no-alert */
 }
