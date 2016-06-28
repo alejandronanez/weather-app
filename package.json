@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack",
     "lint": "eslint . --ext .js",
-    "report-coverage": "nyc report --reporter=lcov | codecov",
+    "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "start": "webpack-dev-server",
     "test": "NODE_PATH=app ava \"./app/**/*.test.js\" --verbose",
     "cover": "nyc --all npm run test",
