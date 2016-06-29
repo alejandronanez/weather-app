@@ -10,6 +10,7 @@
     "start": "webpack-dev-server",
     "test": "NODE_PATH=app ava \"./app/**/*.test.js\" --verbose",
     "cover": "nyc --all npm run test",
+    "report": "nyc --all npm test && nyc report --reporter=lcov | coveralls",
     "cover:check": "nyc --all check-coverage --statements 90 --branches 90 --functions 90 --lines 90",
     "watch:test": "npm run test -- --watch",
     "watch:cover": "nodemon --quiet --watch app --exec npm run cover -s"
@@ -28,6 +29,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-register": "^6.9.0",
     "clean-webpack-plugin": "^0.1.9",
+    "coveralls": "^2.11.9",
     "css-loader": "^0.23.1",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",

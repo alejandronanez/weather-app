@@ -4,3 +4,10 @@ machine:
 
   node:
     version: 5.7.0
+
+test:
+  override:
+    - npm run lint
+    - npm run test
+    - npm run cover
+    - bash <(curl -s https://codecov.io/bash)
